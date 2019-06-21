@@ -17,6 +17,7 @@ spec:
         track: stable
     spec:
       containers:
+      resources:
         - name: hello
           image: "gcr.io/google-samples/hello-go-gke:1.0"
           ports:
