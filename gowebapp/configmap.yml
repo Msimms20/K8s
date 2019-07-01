@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-printer-both
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-printer
+  template:
+    metadata:
+      labels:
+        app: config-printer
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["sh", "-c", "while true; do env; tail -vn +1 /config*/*; sleep 10; done"]
+        envFrom:
+        - configMapRef:
+            name: config1
+        - configMapRef:
+            name: config2
+        volumeMounts:
+        - name: config1vol
+          mountPath: /config1
+        - name: config2vol
+          mountPath: /config2
+      volumes:
+      - name: config1vol
+        configMap:
+          name: config1
+      - name: config2vol
+        configMap:
+          name: config2
