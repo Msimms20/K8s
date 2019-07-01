@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: permissive
+spec:
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  runAsUser:
+    rule: RunAsAny
+  fsGroup:
+    rule: RunAsAny
+  hostNetwork: true
+  volumes:
+  - '*'

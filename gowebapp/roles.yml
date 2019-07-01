@@ -1,0 +1,25 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nodes
+  labels:
+    lab: authz
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "watch", "list"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nodes
+  labels:
+    lab: authz
+subjects:
+- kind: Group
+  name: training
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: nodes
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-printer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-printer
+  template:
+    metadata:
+      labels:
+        app: config-printer
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["sh", "-c", "while true; do env; tail -vn +1 /config*/*; sleep 10; done"]
